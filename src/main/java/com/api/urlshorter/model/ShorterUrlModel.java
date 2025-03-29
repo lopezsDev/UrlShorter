@@ -3,10 +3,13 @@ package com.api.urlshorter.model;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.redis.core.RedisHash;
+
 import java.time.LocalDateTime;
 
 @Data
-@Document(collation = "urls")
+@RedisHash
+@Document(collection = "urls")
 public class ShorterUrlModel {
 
     @Id

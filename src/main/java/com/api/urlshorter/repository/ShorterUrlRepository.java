@@ -9,6 +9,5 @@ import java.util.Optional;
 @Repository
 public interface ShorterUrlRepository extends MongoRepository<ShorterUrlModel, String>{
     Optional<ShorterUrlModel> findByShortCode(String shortCode);
-
 }
 
