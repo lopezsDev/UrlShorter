@@ -27,8 +27,8 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - .:/app  # Montar el código fuente en el contenedor
-      - ~/.m2:/root/.m2  # Cache de dependencias de Maven
+      - .:/app  
+      - ~/.m2:/root/.m2
     working_dir: /app
     environment:
       - DB_HOST=mongo-db
