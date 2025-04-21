@@ -16,7 +16,7 @@ public class UrlMetrics {
 
         meterRegistry.gauge("total_urls_acortadas", urlRepo.count());
         meterRegistry.gauge("total_urls_expiradas", urlRepo, repo -> (double) countExpiredUrls());
-
+        //meterRegistry.counter("access_count", "shortCode", shortCode).increment();
     }
 
     private long countExpiredUrls() {

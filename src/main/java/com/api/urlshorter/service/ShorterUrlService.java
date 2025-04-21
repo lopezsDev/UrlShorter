@@ -2,15 +2,16 @@ package com.api.urlshorter.service;
 
 import com.api.urlshorter.model.ShorterUrlModel;
 import com.api.urlshorter.repository.ShorterUrlRepository;
+import com.api.urlshorter.utils.InputSanitizer;
+import com.api.urlshorter.utils.SafeBrowsingChecker;
+import com.api.urlshorter.utils.ValidationUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Random;
 
 @Service
 public class ShorterUrlService {
@@ -23,6 +24,7 @@ public class ShorterUrlService {
     private RedisTemplate redisTemplate;
 
     public String shortenUrl(String originalUrl, Long expirationTimeInHours) {
+        validateAndSanitize(originalUrl);
 
         String shortCode = generateShortCode();
         LocalDateTime expirationDate = expirationTimeInHours != null ?
@@ -55,7 +57,21 @@ public class ShorterUrlService {
                 .orElseThrow(() -> new RuntimeException("URL no encontrada o expirada: " + shortCode));
     }
 
+    public void validateAndSanitize(String url) {
+        String sanitized = InputSanitizer.sanitize(url);
+
+        if (!ValidationUtils.isValidUrl(sanitized)) {
+            throw new IllegalArgumentException("URL no válida");
+        }
+
+        if (!SafeBrowsingChecker.isSafeUrl(sanitized)) {
+            throw new IllegalArgumentException("La URL apunta a contenido malicioso");
+        }
+    }
+
     private String generateShortCode() {
         return  RandomStringUtils.randomAlphanumeric(6);
     }
+
+
 }

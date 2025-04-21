@@ -2,7 +2,9 @@ package com.api.urlshorter.controller;
 
 import com.api.urlshorter.dto.UrlRequestDTO;
 import com.api.urlshorter.service.ShorterUrlService;
+import com.api.urlshorter.utils.ValidationUtils;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +18,7 @@ public class UrlShorterController {
 
     @Operation(summary = "Método para recibir URL y acortarla")
     @PostMapping("/shorten")
-    public ResponseEntity<String> shortenUrl(@RequestBody UrlRequestDTO urlRequestDTO) {
+    public ResponseEntity<String> createShortenedtUrl(@Valid @RequestBody UrlRequestDTO urlRequestDTO) {
         String shortCode = urlService.shortenUrl(urlRequestDTO.originalUrl(), urlRequestDTO.expirationTimeInHours());
         return ResponseEntity.ok(shortCode);
     }
@@ -27,5 +29,4 @@ public class UrlShorterController {
         String originalUrl = urlService.getOriginalUrl(shortCode);
         return ResponseEntity.ok(originalUrl);
     }
-
 }
