@@ -1,13 +1,13 @@
-    FROM maven:3.8.8-eclipse-temurin-17
-    WORKDIR /app
+FROM maven:3.8.8-eclipse-temurin-17
+WORKDIR /app
 
-    COPY pom.xml ./
-    COPY .mvn .mvn
+COPY pom.xml ./
+COPY .mvn .mvn
 
-    RUN mvn dependency:resolve
+RUN mvn dependency:resolve
 
-    COPY . .
+COPY . .
 
-    EXPOSE 8080
+EXPOSE 8080
 
-    CMD ["mvn", "spring-boot:run"]
+CMD ["mvn", "spring-boot:run", "-Dspring-boot.run.profiles=dev"]
