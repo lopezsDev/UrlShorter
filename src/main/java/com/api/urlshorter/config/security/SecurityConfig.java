@@ -17,11 +17,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/api/url/getOriginal/**",
+                                "/api/url/saludo",
                                 "/api/url/shorten",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
                                 "/swagger-ui/index.html",  // Añadir esta ruta específica
-                                "/webjars/**",            // Necesario para los recursos de Swagger UI
                                 "/v3/api-docs/**",
                                 "/v3/api-docs.yaml",
                                 "/v3/api-docs.json"

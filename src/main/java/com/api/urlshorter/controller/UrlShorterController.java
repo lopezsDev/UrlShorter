@@ -29,4 +29,14 @@ public class UrlShorterController {
         String originalUrl = urlService.getOriginalUrl(shortCode);
         return ResponseEntity.ok(originalUrl);
     }
+
+    @GetMapping("/saludo")
+    public String getSaludo() {
+        String tipo = "holal";
+        if (tipo == "hola"){
+            return "Hola!";
+        }else{
+            return "Hi how are you?";
+        }
+    }
 }

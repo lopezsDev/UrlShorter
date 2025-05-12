@@ -1,3 +1,5 @@
+version: '3.9'
+
 services:
   mongo:
     image: mongo:latest
@@ -25,7 +27,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - .:/app  
+      - .:/app
       - ~/.m2:/root/.m2
     working_dir: /app
     environment:
@@ -35,6 +37,7 @@ services:
       - SAFE_BROWSING_API_KEY=${SAFE_BROWSING_API_KEY}
     env_file:
       - .env
+    command: mvn spring-boot:run
 
 volumes:
   mongo-data:
